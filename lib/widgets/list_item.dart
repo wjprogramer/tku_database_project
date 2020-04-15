@@ -14,7 +14,7 @@ class ListItem extends StatefulWidget {
 }
 
 class _ListItemState extends State<ListItem> {
-  double itemHeight = 100.0;
+  double itemHeight = 80.0;
   double itemVerticalPadding = 10.0;
   double itemHorizontalPadding = 10.0;
   double itemBorderRadius = 20;

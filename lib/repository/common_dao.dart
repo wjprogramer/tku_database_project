@@ -5,7 +5,13 @@ import 'package:tkudatabaseproject/repository/database_creator.dart';
 class CommonDAO {
   static Future<void> dropTable(String tableName) async {
     print('DROP TABLE');
-    final sql = '''DROP TABLE $tableName''';
+    final sql = '''DROP TABLE IF EXISTS $tableName''';
+    await MyDatabase.db.execute(sql);
+  }
+
+  static Future<void> clearTable(String tableName) async {
+    print('CLEAR TABLE');
+    final sql = '''DELETE FROM $tableName''';
     await MyDatabase.db.execute(sql);
   }
 

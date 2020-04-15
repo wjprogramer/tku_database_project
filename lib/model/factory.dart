@@ -39,6 +39,10 @@ final tableNameOf = <Type, String>{
   Record: RecordTableCreator.tableName,
 };
 
+final insertFormColumnNamesOf = <Type, List<String>>{
+  Member: ['身分證字號', '姓名', '生日', '電話', '住址', '電子郵件', '介紹人'],
+};
+
 final fromJsonOf = <Type, Function>{
   Member: (json) => Member.fromJson(json),
   Product: (json) => Product.fromJson(json),

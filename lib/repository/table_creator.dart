@@ -127,16 +127,16 @@ class BrowseTableCreator extends TableCreator {
   static const tableName = 'Browse';
 
   static const MEMBER_ID = 'mId';
-  static const CART_TIME = 'cartTime';
+  static const BROWSE_TIME = 'browseTime';
   static const PRODUCT_NUMBER = 'pNo';
 
   static Future<void> createTodoTable(Database db) async {
     final todoSql = '''CREATE TABLE $tableName
     (
       $MEMBER_ID INTEGER,
-      $CART_TIME TEXT,
+      $BROWSE_TIME TEXT,
       $PRODUCT_NUMBER INTEGER,
-      PRIMARY KEY ($MEMBER_ID, $CART_TIME, $PRODUCT_NUMBER)
+      PRIMARY KEY ($MEMBER_ID, $BROWSE_TIME, $PRODUCT_NUMBER)
     )''';
 
     await db.execute(todoSql);
