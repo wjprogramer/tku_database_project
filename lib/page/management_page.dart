@@ -80,7 +80,9 @@ class _Row extends StatelessWidget {
   List<Widget> content() {
     switch (model.runtimeType) {
       case Member:
+        var member = model as Member;
         return [
+          Text(member.name),
         ];
       case Product:
         return [
