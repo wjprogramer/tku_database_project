@@ -11,73 +11,109 @@ class MemberDao extends CommonDAO {
     List<dynamic> params = [id];
     final data = await MyDatabase.db.rawQuery(sql, params);
 
-    final todo = Member.fromJson(data.first);
-    return todo;
+    final member = Member.fromJson(data.first);
+    return member;
   }
 
-  static Future<int> insert(Member group) async {
+  static Future<int> insert(Member member) async {
     final sql = '''INSERT INTO ${MemberTableCreator.tableName}
     (
+      ${MemberTableCreator.ID_NUMBER},
+      ${MemberTableCreator.NAME},
+      ${MemberTableCreator.BIRTHDAY},
+      ${MemberTableCreator.PHONE},
+      ${MemberTableCreator.ADDRESS},
+      ${MemberTableCreator.EMAIL},
+      ${MemberTableCreator.INTRODUCER}
     )
-    VALUES (?,?,?,?,?)''';
+    VALUES (?,?,?,?,?,?,?)''';
 
     List<dynamic> params = [
+      member.idNumber,
+      member.name,
+      member.birthday,
+      member.phone,
+      member.address,
+      member.email,
+      member.introducer,
     ];
 
     final int result = await MyDatabase.db.rawInsert(sql, params);
-    MyDatabase.databaseLog('Insert Group', sql, null, result, params);
+    MyDatabase.databaseLog('Insert Member', sql, null, result, params);
     return result;
   }
 
-  static Future<void> delete(int groupId) async {
+  static Future<void> delete(int id) async {
     final sql = '''
       DELETE FROM ${MemberTableCreator.tableName}
-      WHERE ___ = ?
+      WHERE ${MemberTableCreator.MEMBER_ID} = ?
     ''';
 
     List<dynamic> params = [
+      id
     ];
 
     final result = await MyDatabase.db.rawUpdate(sql, params);
 
-    MyDatabase.databaseLog('Delete Group', sql, null, result, params);
+    MyDatabase.databaseLog('Delete Member', sql, null, result, params);
   }
 
   static Future<void> update(Member member) async {
     final sql = '''
       UPDATE ${MemberTableCreator.tableName}
       SET 
-        __ = ?,
-      WHERE __ = ?
+        ${MemberTableCreator.ID_NUMBER} = ?,
+        ${MemberTableCreator.NAME} = ?,
+        ${MemberTableCreator.BIRTHDAY} = ?,
+        ${MemberTableCreator.PHONE} = ?,
+        ${MemberTableCreator.ADDRESS} = ?,
+        ${MemberTableCreator.EMAIL} = ?,
+        ${MemberTableCreator.INTRODUCER} = ?
+      WHERE ${MemberTableCreator.MEMBER_ID} = ?
     ''';
 
     List<dynamic> params = [
+      member.idNumber,
+      member.name,
+      member.birthday,
+      member.phone,
+      member.address,
+      member.email,
+      member.introducer,
+      member.memberId,
     ];
+
     final result = await MyDatabase.db.rawUpdate(sql, params);
 
-    MyDatabase.databaseLog('Update Group', sql, null, result, params);
+    MyDatabase.databaseLog('Update Member', sql, null, result, params);
   }
 }
 
 class ProductDao extends CommonDAO {
-  static Future<Product> get(int id) async {
+  static Future<Product> get(int pNo) async {
     final sql = '''SELECT * FROM ${ProductTableCreator.tableName}
-    WHERE ___ = ?''';
+    WHERE ${ProductTableCreator.PRODUCT_NUMBER} = ?''';
 
-    List<dynamic> params = [id];
+    List<dynamic> params = [pNo];
     final data = await MyDatabase.db.rawQuery(sql, params);
 
     final todo = Product.fromJson(data.first);
     return todo;
   }
 
-  static Future<int> insert(Member group) async {
+  static Future<int> insert(Product product) async {
     final sql = '''INSERT INTO ${ProductTableCreator.tableName}
     (
+      ${ProductTableCreator.PRODUCT_NAME},
+      ${ProductTableCreator.UNIT_PRICE},
+      ${ProductTableCreator.CATEGORY}
     )
-    VALUES (?,?,?,?,?)''';
+    VALUES (?,?,?)''';
 
     List<dynamic> params = [
+      product.productName,
+      product.unitPrice,
+      product.category,
     ];
 
     final int result = await MyDatabase.db.rawInsert(sql, params);
@@ -85,14 +121,13 @@ class ProductDao extends CommonDAO {
     return result;
   }
 
-  static Future<void> delete(int groupId) async {
+  static Future<void> delete(int pNo) async {
     final sql = '''
       DELETE FROM ${ProductTableCreator.tableName}
-      WHERE ___ = ?
+      WHERE ${ProductTableCreator.PRODUCT_NUMBER} = ?
     ''';
 
-    List<dynamic> params = [
-    ];
+    List<dynamic> params = [pNo];
 
     final result = await MyDatabase.db.rawUpdate(sql, params);
 
