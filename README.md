@@ -2,7 +2,7 @@
 
 大四下資料庫專案
 
-## XXxxx
+## 後台
 
 init	20:41
 end 	22:32
@@ -20,9 +20,13 @@ start	12:13
 end 	12:30
 time    00:17
 
-start-1	:
-end 	:
-time
+start-1	12:38
+end-1 	14:16
+time    01:38
+
+共計：   07:00
+
+## 前台
 
 start	:
 end 	:
