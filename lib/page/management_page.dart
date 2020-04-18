@@ -66,14 +66,16 @@ class _ManagementPageState extends State<ManagementPage> {
         ),
         Container(
           height: 200,
-          padding: const EdgeInsets.all(8),
           margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 20),
           decoration: BoxDecoration(
             border: Border.all(color: colorOf[type]),
           ),
           child: ListView(
             children: [
-
+              Container(
+                color: colorOf[type],
+                child: _TableHeader(type: type,)
+              ),
               ...models.map((model) => _TableRow(model: model,)).toList()
             ],
           ),
@@ -84,9 +86,10 @@ class _ManagementPageState extends State<ManagementPage> {
   }
 
   onInsert() async {
+    var parameters = controllers.map((ctrl) => ctrl.text).toList();
+
     switch (type) {
       case Member:
-        var parameters = controllers.map((ctrl) => ctrl.text).toList();
         var member = Member.fromList(parameters);
         int id = await insertOf[type](member);
         member.memberId = id;
@@ -94,18 +97,48 @@ class _ManagementPageState extends State<ManagementPage> {
         setState(() { });
         break;
       case Product:
+        var product = Product.fromList(parameters);
+        int id = await insertOf[type](product);
+        product.productNumber = id.toString();
+        models.add(product);
+        setState(() { });
         break;
       case Author:
+        var author = Author.fromList(parameters);
+        int id = await insertOf[type](author);
+        models.add(author);
+        setState(() { });
         break;
       case Transaction:
+        var transaction = Transaction.fromList(parameters);
+        int id = await insertOf[type](transaction);
+        transaction.transNumber = id.toString();
+        models.add(transaction);
+        setState(() { });
         break;
       case Cart:
+        var cart = Cart.fromList(parameters);
+        int id = await insertOf[type](cart);
+        models.add(cart);
+        setState(() { });
         break;
       case Browse:
+        var browse = Browse.fromList(parameters);
+        int id = await insertOf[type](browse);
+        models.add(browse);
+        setState(() { });
         break;
       case Order:
+        var order = Order.fromList(parameters);
+        int id = await insertOf[type](order);
+        models.add(order);
+        setState(() { });
         break;
       case Record:
+        var record = Record.fromList(parameters);
+        int id = await insertOf[type](record);
+        models.add(record);
+        setState(() { });
         break;
       default:
         break;
@@ -142,14 +175,87 @@ class _TableHeader<T> extends StatelessWidget {
 
   _TableHeader({this.type});
 
-  header() {
+  Widget header(String headerName, {bool isLast = false}) {
+    return Expanded(
+        child: Container(
+            padding: const EdgeInsets.all(8),
+            decoration: BoxDecoration(
+                border: Border(
+                    right: BorderSide(
+                      color: isLast ? colorOf[type] : Colors.white,
+                    )
+                )
+            ),
+            child: Text(headerName, style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),)
+        )
+    );
+  }
 
+  List<Widget> headers() {
+    switch (type) {
+      case Member:
+        return [
+          header('memberId'),
+          header('name'),
+          header('birthday', isLast: true),
+        ];
+      case Product:
+        return [
+          header('productNumber'),
+          header('productName'),
+          header('unitPrice'),
+          header('category'),
+        ];
+      case Author:
+        return [
+          header('productNumber'),
+          header('name'),
+        ];
+      case Transaction:
+        return [
+          header('transNumber'),
+          header('transMember'),
+          header('transTime'),
+        ];
+      case Cart:
+        return [
+          header('memberId'),
+          header('cartTime'),
+          header('transNumber'),
+        ];
+      case Browse:
+        return [
+          header('memberId'),
+          header('browseTime'),
+          header('productNumber'),
+        ];
+      case Order:
+        return [
+          header('memberId'),
+          header('cartTime'),
+          header('productNumber'),
+          header('amount'),
+        ];
+      case Record:
+        return [
+          header('transNumber'),
+          header('productNumber'),
+          header('amount'),
+          header('salePrice'),
+        ];
+      default:
+        return [
+          header('memberId'),
+          header('name'),
+          header('birthday'),
+        ];
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Row(
-      children: <Widget>[],
+      children: headers(),
     );
   }
 }
@@ -178,100 +284,100 @@ class _TableRow extends StatelessWidget {
           ),
         ];
       case Product:
-        var member = model as Product;
+        var product = model as Product;
         return [
           Expanded(
-              child: Text(member.productNumber.toString())
+              child: Text(product.productNumber.toString())
           ),
           Expanded(
-            child: Text(member.productName.toString()),
+            child: Text(product.productName.toString()),
           ),
           Expanded(
-            child: Text(member.unitPrice.toString()),
+            child: Text(product.unitPrice.toString()),
           ),
           Expanded(
-            child: Text(member.category.toString()),
+            child: Text(product.category.toString()),
           ),
         ];
       case Author:
-        var member = model as Author;
+        var author = model as Author;
         return [
           Expanded(
-              child: Text(member.productNumber.toString())
+              child: Text(author.productNumber.toString())
           ),
           Expanded(
-            child: Text(member.name.toString()),
+            child: Text(author.name.toString()),
           ),
         ];
       case Transaction:
-        var member = model as Transaction;
+        var transaction = model as Transaction;
         return [
           Expanded(
-              child: Text(member.transNumber.toString())
+              child: Text(transaction.transNumber.toString())
           ),
           Expanded(
-            child: Text(member.transMember.toString()),
+            child: Text(transaction.transMember.toString()),
           ),
           Expanded(
-            child: Text(member.transTime.toString()),
+            child: Text(transaction.transTime.toString()),
           ),
         ];
       case Cart:
-        var member = model as Cart;
+        var cart = model as Cart;
         return [
           Expanded(
-              child: Text(member.memberId.toString())
+              child: Text(cart.memberId.toString())
           ),
           Expanded(
-            child: Text(member.cartTime.toString()),
+            child: Text(cart.cartTime.toString()),
           ),
           Expanded(
-            child: Text(member.transNumber.toString()),
+            child: Text(cart.transNumber.toString()),
           ),
         ];
       case Browse:
-        var member = model as Browse;
+        var browse = model as Browse;
         return [
           Expanded(
-              child: Text(member.memberId.toString())
+              child: Text(browse.memberId.toString())
           ),
           Expanded(
-            child: Text(member.browseTime.toString()),
+            child: Text(browse.browseTime.toString()),
           ),
           Expanded(
-            child: Text(member.productNumber.toString()),
+            child: Text(browse.productNumber.toString()),
           ),
         ];
       case Order:
-        var member = model as Order;
+        var order = model as Order;
         return [
           Expanded(
-              child: Text(member.memberId.toString())
+              child: Text(order.memberId.toString())
           ),
           Expanded(
-            child: Text(member.cartTime.toString()),
+            child: Text(order.cartTime.toString()),
           ),
           Expanded(
-            child: Text(member.productNumber.toString()),
+            child: Text(order.productNumber.toString()),
           ),
           Expanded(
-            child: Text(member.amount.toString()),
+            child: Text(order.amount.toString()),
           ),
         ];
       case Record:
-        var member = model as Record;
+        var record = model as Record;
         return [
           Expanded(
-              child: Text(member.transNumber.toString())
+              child: Text(record.transNumber.toString())
           ),
           Expanded(
-            child: Text(member.productNumber.toString()),
+            child: Text(record.productNumber.toString()),
           ),
           Expanded(
-            child: Text(member.amount.toString()),
+            child: Text(record.amount.toString()),
           ),
           Expanded(
-            child: Text(member.salePrice.toString()),
+            child: Text(record.salePrice.toString()),
           ),
         ];
       default:

@@ -71,7 +71,12 @@ class Product extends BaseModel {
     this.category = parameters[i++];
   }
 
-  Product.fromJson(Map<String, dynamic> json) : super.fromJson(json);
+  Product.fromJson(Map<String, dynamic> json) : super.fromJson(json) {
+    this.productNumber = json[ProductTableCreator.PRODUCT_NUMBER].toString();
+    this.productName = json[ProductTableCreator.PRODUCT_NAME];
+    this.unitPrice = json[ProductTableCreator.UNIT_PRICE];
+    this.category = json[ProductTableCreator.CATEGORY];
+  }
 }
 
 class Author extends BaseModel {
@@ -89,7 +94,10 @@ class Author extends BaseModel {
     this.name = parameters[i++];
   }
 
-  Author.fromJson(Map<String, dynamic> json) : super.fromJson(json);
+  Author.fromJson(Map<String, dynamic> json) : super.fromJson(json) {
+    this.productNumber = json[AuthorTableCreator.PRODUCT_NUMBER].toString();
+    this.name = json[AuthorTableCreator.NAME];
+  }
 }
 
 class Transaction extends BaseModel {
@@ -127,7 +135,17 @@ class Transaction extends BaseModel {
     this.dueDate = parameters[i++];
   }
 
-  Transaction.fromJson(Map<String, dynamic> json) : super.fromJson(json);
+  Transaction.fromJson(Map<String, dynamic> json) : super.fromJson(json) {
+    this.transNumber = json[TransactionTableCreator.TRANS_NUMBER].toString();
+    this.transMember = json[TransactionTableCreator.TRANS_MEMBER];
+    this.method = json[TransactionTableCreator.METHOD];
+    this.transTime = json[TransactionTableCreator.TRANS_TIME];
+    this.bankId = json[TransactionTableCreator.BANK_ID];
+    this.bankName = json[TransactionTableCreator.BANK_NAME];
+    this.cardType = json[TransactionTableCreator.CARD_TYPE];
+    this.cardId = json[TransactionTableCreator.CARD_ID];
+    this.dueDate = json[TransactionTableCreator.DUE_DATE];
+  }
 }
 
 class Cart extends BaseModel {
@@ -148,7 +166,11 @@ class Cart extends BaseModel {
     this.transNumber = parameters[i++];
   }
 
-  Cart.fromJson(Map<String, dynamic> json) : super.fromJson(json);
+  Cart.fromJson(Map<String, dynamic> json) : super.fromJson(json) {
+    this.memberId = json[CartTableCreator.MEMBER_ID];
+    this.cartTime = json[CartTableCreator.CART_TIME];
+    this.transNumber = json[CartTableCreator.TRANS_NUMBER];
+  }
 }
 
 class Browse extends BaseModel {
@@ -169,7 +191,11 @@ class Browse extends BaseModel {
     this.productNumber = parameters[i++];
   }
 
-  Browse.fromJson(Map<String, dynamic> json) : super.fromJson(json);
+  Browse.fromJson(Map<String, dynamic> json) : super.fromJson(json) {
+    this.memberId = json[BrowseTableCreator.MEMBER_ID].toString();
+    this.browseTime = json[BrowseTableCreator.BROWSE_TIME];
+    this.productNumber = json[BrowseTableCreator.PRODUCT_NUMBER].toString();
+  }
 }
 
 class Order extends BaseModel {
@@ -193,7 +219,12 @@ class Order extends BaseModel {
     this.amount = parameters[i++];
   }
 
-  Order.fromJson(Map<String, dynamic> json) : super.fromJson(json);
+  Order.fromJson(Map<String, dynamic> json) : super.fromJson(json) {
+    this.memberId = json[OrderTableCreator.MEMBER_ID].toString();
+    this.cartTime = json[OrderTableCreator.CART_TIME];
+    this.productNumber = json[OrderTableCreator.PRODUCT_NUMBER].toString();
+    this.amount = json[OrderTableCreator.AMOUNT].toString();
+  }
 }
 
 class Record extends BaseModel {
@@ -217,6 +248,11 @@ class Record extends BaseModel {
     this.salePrice = parameters[i++];
   }
 
-  Record.fromJson(Map<String, dynamic> json) : super.fromJson(json);
+  Record.fromJson(Map<String, dynamic> json) : super.fromJson(json) {
+    this.transNumber = json[RecordTableCreator.TRANS_NUMBER].toString();
+    this.productNumber = json[RecordTableCreator.PRODUCT_NUMBER].toString();
+    this.amount = json[RecordTableCreator.AMOUNT].toString();
+    this.salePrice = json[RecordTableCreator.SALE_PRICE].toString();
+  }
 }
 

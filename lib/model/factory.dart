@@ -90,10 +90,10 @@ final getOf = <Type, Function>{
   Product: (id) => ProductDao.get(id),
   Author: (id) => AuthorDao.get(id),
   Transaction: (id) => TransactionDao.get(id),
-  Cart: (id) => CartDao.get(id),
+  Cart: (id, transNo) => CartDao.get(id, transNo),
   Browse: (id) => BrowseDao.get(id),
   Order: (id) => OrderDao.get(id),
-  Record: (id) => RecordDao.get(id),
+  Record: (transNumber, productNumber) => RecordDao.get(transNumber, productNumber),
 };
 
 final updateOf = <Type, Function>{
@@ -112,10 +112,10 @@ final deleteOf = <Type, Function>{
   Product: (id) => ProductDao.delete(id),
   Author: (id) => AuthorDao.delete(id),
   Transaction: (id) => TransactionDao.delete(id),
-  Cart: (id) => CartDao.delete(id),
+  Cart: (mId, transNumber) => CartDao.delete(mId, transNumber),
   Browse: (id) => BrowseDao.delete(id),
-  Order: (id) => OrderDao.delete(id),
-  Record: (id) => RecordDao.delete(id),
+  Order: (mId, cartTime, productNumber) => OrderDao.delete(mId, cartTime, productNumber),
+  Record: (tNo, pNo) => RecordDao.delete(tNo, pNo),
 };
 
 //endregion
