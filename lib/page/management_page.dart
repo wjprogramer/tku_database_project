@@ -72,7 +72,10 @@ class _ManagementPageState extends State<ManagementPage> {
             border: Border.all(color: colorOf[type]),
           ),
           child: ListView(
-            children: models.map((model) => _Row(model: model,)).toList(),
+            children: [
+
+              ...models.map((model) => _TableRow(model: model,)).toList()
+            ],
           ),
 //      models
         ),
@@ -88,6 +91,7 @@ class _ManagementPageState extends State<ManagementPage> {
         int id = await insertOf[type](member);
         member.memberId = id;
         models.add(member);
+        setState(() { });
         break;
       case Product:
         break;
@@ -122,7 +126,7 @@ class _ManagementPageState extends State<ManagementPage> {
             modelType: widget.modelType,
             onInsert: onInsert,
           ),
-          title('搜尋結果'),
+          title('表格內容'),
           modelGrid(),
 //          title('修改'),
           title('其他操作'),
@@ -133,10 +137,28 @@ class _ManagementPageState extends State<ManagementPage> {
   }
 }
 
-class _Row extends StatelessWidget {
+class _TableHeader<T> extends StatelessWidget {
+  final Type type;
+
+  _TableHeader({this.type});
+
+  header() {
+
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: <Widget>[],
+    );
+  }
+}
+
+
+class _TableRow extends StatelessWidget {
   final BaseModel model;
 
-  _Row({
+  _TableRow({
     this.model,
   });
 
@@ -145,31 +167,126 @@ class _Row extends StatelessWidget {
       case Member:
         var member = model as Member;
         return [
-          Text(member.idNumber.toString()),
-          Text(member.name.toString()),
-          Text(member.birthday.toString()),
-          Text(member.phone.toString()),
-          Text(member.address.toString()),
-          Text(member.email.toString()),
+          Expanded(
+            child: Text(member.memberId.toString())
+          ),
+          Expanded(
+            child: Text(member.name.toString()),
+          ),
+          Expanded(
+            child: Text(member.birthday.toString()),
+          ),
         ];
       case Product:
+        var member = model as Product;
         return [
-
+          Expanded(
+              child: Text(member.productNumber.toString())
+          ),
+          Expanded(
+            child: Text(member.productName.toString()),
+          ),
+          Expanded(
+            child: Text(member.unitPrice.toString()),
+          ),
+          Expanded(
+            child: Text(member.category.toString()),
+          ),
         ];
       case Author:
-        return [];
+        var member = model as Author;
+        return [
+          Expanded(
+              child: Text(member.productNumber.toString())
+          ),
+          Expanded(
+            child: Text(member.name.toString()),
+          ),
+        ];
       case Transaction:
-        return [];
+        var member = model as Transaction;
+        return [
+          Expanded(
+              child: Text(member.transNumber.toString())
+          ),
+          Expanded(
+            child: Text(member.transMember.toString()),
+          ),
+          Expanded(
+            child: Text(member.transTime.toString()),
+          ),
+        ];
       case Cart:
-        return [];
+        var member = model as Cart;
+        return [
+          Expanded(
+              child: Text(member.memberId.toString())
+          ),
+          Expanded(
+            child: Text(member.cartTime.toString()),
+          ),
+          Expanded(
+            child: Text(member.transNumber.toString()),
+          ),
+        ];
       case Browse:
-        return [];
+        var member = model as Browse;
+        return [
+          Expanded(
+              child: Text(member.memberId.toString())
+          ),
+          Expanded(
+            child: Text(member.browseTime.toString()),
+          ),
+          Expanded(
+            child: Text(member.productNumber.toString()),
+          ),
+        ];
       case Order:
-        return [];
+        var member = model as Order;
+        return [
+          Expanded(
+              child: Text(member.memberId.toString())
+          ),
+          Expanded(
+            child: Text(member.cartTime.toString()),
+          ),
+          Expanded(
+            child: Text(member.productNumber.toString()),
+          ),
+          Expanded(
+            child: Text(member.amount.toString()),
+          ),
+        ];
       case Record:
-        return [];
+        var member = model as Record;
+        return [
+          Expanded(
+              child: Text(member.transNumber.toString())
+          ),
+          Expanded(
+            child: Text(member.productNumber.toString()),
+          ),
+          Expanded(
+            child: Text(member.amount.toString()),
+          ),
+          Expanded(
+            child: Text(member.salePrice.toString()),
+          ),
+        ];
       default:
-        return [];
+        var member = model as Member;
+        return [
+          Expanded(
+              child: Text(member.memberId.toString())
+          ),
+          Expanded(
+            child: Text(member.name.toString()),
+          ),
+          Expanded(
+            child: Text(member.birthday.toString()),
+          ),
+        ];
     }
   }
 

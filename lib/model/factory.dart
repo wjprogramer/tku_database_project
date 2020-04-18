@@ -41,6 +41,13 @@ final tableNameOf = <Type, String>{
 
 final insertFormColumnNamesOf = <Type, List<String>>{
   Member: ['身分證字號', '姓名', '生日', '電話', '住址', '電子郵件', '介紹人'],
+  Product: ['商品名稱', '定價', '種類'],
+  Author: ['商品編號', '作品名稱'],
+  Transaction: ['交易會員', '交易方式', '交易時間', '銀行代號', '銀行名稱', '信用卡種類', '信用卡卡號', '到期日'],
+  Cart: ['會員編號', '購物車產生時間', '交易編號'],
+  Browse: ['會員編號', '瀏覽時間', '商品編號'],
+  Order: ['會員編號', '購物車產生時間', '商品編號', '訂購數量'],
+  Record: ['交易編號', '商品編號', '交易數量', '售價'],
 };
 
 final fromJsonOf = <Type, Function>{
