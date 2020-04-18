@@ -26,7 +26,8 @@ class MemberTableCreator extends TableCreator {
       $PHONE TEXT,
       $ADDRESS TEXT,
       $EMAIL TEXT,
-      $INTRODUCER TEXT
+      $INTRODUCER TEXT,
+      FOREIGN KEY($INTRODUCER) REFERENCES $tableName($MEMBER_ID)
     )''';
 
     await db.execute(todoSql);
